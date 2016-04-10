@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Example JS SDK</title>
+    <title>Example Seekube JS SDK</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -11,29 +11,21 @@
     <!-- Place favicon.ico in the root directory -->
 </head>
 <body>
-<!--[if lt IE 8]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-<![endif]-->
 
 <!-- Add your site or application content here -->
 <p>Hello world! This is HTML5 Boilerplate.</p>
-
 
 <div id="skEvent"></div>
 <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
 <script type="text/javascript" id="sk-event-b0f0-13e9-3737-d5a159268ae6">
     var s = document.createElement('script');
-    s.type = 'text/javascript';
-    s.async = true;
-    s.src = 'script.js';
+    s.type = 'text/javascript';s.async = true;s.src = 'script.js';
     var embedder = document.getElementById('sk-event-b0f0-13e9-3737-d5a159268ae6');
     embedder.parentNode.insertBefore(s, embedder);
+    s.onload = function(){
+        SK.initEventWidget();
+    };
 </script>
 
-<script>
-    window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
-    ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
-</script>
-<script src="https://www.google-analytics.com/analytics.js" async defer></script>
 </body>
 </html>

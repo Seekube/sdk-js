@@ -1,75 +1,62 @@
-(function () {
-    // add array index of for old browsers (IE<9)
-    if (!Array.prototype.indexOf) {
-        Array.prototype.indexOf = function(obj, start) {
-            var i, j;
-            i = start || 0;
-            j = this.length;
-            while (i < j) {
-                if (this[i] === obj) {
-                    return i;
-                }
-                i++;
-            }
-            return -1;
-        };
-    }
+'use strict';
 
-    // add a style tag to the head
-    var head = document.getElementsByTagName('head')[0];
-    var styleTag = document.createElement("link");
-    styleTag.rel = "stylesheet";
-    styleTag.type = "text/css";
-    styleTag.href =  "style.css";
-    styleTag.media = "all";
+window.SK = {
+   initEventWidget: function() {
+       var head = document.getElementsByTagName('head')[0];
+       var styleTag = document.createElement("link");
+       styleTag.rel = "stylesheet";
+       styleTag.type = "text/css";
+       styleTag.href =  "style.css";
+       styleTag.media = "all";
 
-    var momentScript = document.createElement("script");
-    momentScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js';
-    momentScript.onload = function(){
-        var momentLocale = document.createElement("script");
-        momentLocale.src = 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/locale/fr.js';
-        head.appendChild(momentLocale);
-    };
+       var momentScript = document.createElement("script");
+       momentScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js';
+       momentScript.onload = function(){
+           var momentLocale = document.createElement("script");
+           momentLocale.src = 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/locale/fr.js';
+           head.appendChild(momentLocale);
+       };
 
-    head.appendChild(styleTag);
-    head.appendChild(momentScript);
+       head.appendChild(styleTag);
+       head.appendChild(momentScript);
 
-    window.onload = function() {
-        moment.locale('fr');
+       window.onload = function() {
+           moment.locale('fr');
 
-        var embedElement = document.getElementById('skEvent');
-        
-        var widget = document.createElement('div');
-        widget.id = 'skEventWidget';
-        widget.className = 'sk-event-widget';
-        widget.innerHTML = '<header class="sk-event-widget-header">Evénements carrière</header>';
+           var embedElement = document.getElementById('skEvent');
 
-        var eventList = document.createElement('ul');
-        eventList.className = 'sk-event-list';
+           var widget = document.createElement('div');
+           widget.id = 'skEventWidget';
+           widget.className = 'sk-event-widget';
+           widget.innerHTML = '<header class="sk-event-widget-header">Evénements carrière</header>';
 
-        // Get events list
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-                var listHtml = '';
-                var response = JSON.parse(xhttp.responseText);
+           var eventList = document.createElement('ul');
+           eventList.className = 'sk-event-list';
 
-                response.data.forEach(function(event) {
-                    var eventDate = moment(event.beginAt).format('dddd D MMMM');
+           // Get events list
+           var xhttp = new XMLHttpRequest();
+           
+           xhttp.onreadystatechange = function() {
+               if (xhttp.readyState == 4 && xhttp.status == 200) {
+                   var listHtml = '';
+                   var response = JSON.parse(xhttp.responseText);
 
-                    listHtml += '<li>' +
-                        '<a href="' + event.url + '" target="_blank">' + event.name + '</a><br />' +
-                        '<span class="sk-event-date">' + eventDate + '</span>' +
-                        '</li>';
-                });
+                   response.data.forEach(function(event) {
+                       var eventDate = moment(event.beginAt).format('dddd D MMMM');
 
-                eventList.innerHTML = listHtml;
-                widget.appendChild(eventList);
-                embedElement.appendChild(widget);
-            }
-        };
-        xhttp.open("GET", "http://dev.seekube.net:3030/events", true);
-        xhttp.send();
-    };
+                       listHtml += '<li>' +
+                           '<a href="' + event.url + '" target="_blank">' + event.name + '</a><br />' +
+                           '<span class="sk-event-date">' + eventDate + '</span>' +
+                           '</li>';
+                   });
 
-})(this);
+                   eventList.innerHTML = listHtml;
+                   widget.appendChild(eventList);
+                   embedElement.appendChild(widget);
+               }
+           };
+           xhttp.open("GET", "http://dev.seekube.net:3030/events", true);
+           xhttp.send();
+       };
+   }
+};
