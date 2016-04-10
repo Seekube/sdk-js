@@ -1,4 +1,4 @@
-(function (global) {
+(function () {
     // add array index of for old browsers (IE<9)
     if (!Array.prototype.indexOf) {
         Array.prototype.indexOf = function(obj, start) {
@@ -13,40 +13,63 @@
             }
             return -1;
         };
-    }  
-
-    // make a global object to store stuff in
-    if(!global.SeekubeSdk) { global.SeekubeSdk = {}; };
-    var SeekubeSdk = global.SeekubeSdk;
-
-    // To keep track of which embeds we have already processed
-    if(!SeekubeSdk.processedScripts) { SeekubeSdk.processedScripts = []; };
-    var processedScripts = SeekubeSdk.processedScripts;
-
-    if(!SeekubeSdk.styleTags) { SeekubeSdk.styleTags = []; };
-    var styleTags = SeekubeSdk.styleTags;
-
-    var scriptTags = document.getElementsByTagName('script');
+    }
 
     // add a style tag to the head
+    var head = document.getElementsByTagName('head')[0];
     var styleTag = document.createElement("link");
     styleTag.rel = "stylesheet";
     styleTag.type = "text/css";
     styleTag.href =  "style.css";
     styleTag.media = "all";
-    document.getElementsByTagName('head')[0].appendChild(styleTag);
-    styleTags.push(styleTag);
 
-    var embedElement = document.getElementById('skEvent');
+    var momentScript = document.createElement("script");
+    momentScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js';
+    momentScript.onload = function(){
+        var momentLocale = document.createElement("script");
+        momentLocale.src = 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/locale/fr.js';
+        head.appendChild(momentLocale);
+    };
 
-    // Create a div
-    var div = document.createElement('div');
-    div.id = 'skEventWidget';
-    div.className = 'sk-event-widget';
+    head.appendChild(styleTag);
+    head.appendChild(momentScript);
 
-    // add the cleanslate classs for extreme-CSS reset.
-    div.innerHTML = '<header class="sk-event-widget-header">Evénements carrière</header>' +
-            '<ul class="sk-event-list"><li><a href="#" class="sk-event-title">Forum X</a></li></ul>';
+    window.onload = function() {
+        moment.locale('fr');
 
-    embedElement.appendChild(div);
+        var embedElement = document.getElementById('skEvent');
+        
+        var widget = document.createElement('div');
+        widget.id = 'skEventWidget';
+        widget.className = 'sk-event-widget';
+        widget.innerHTML = '<header class="sk-event-widget-header">Evénements carrière</header>';
+
+        var eventList = document.createElement('ul');
+        eventList.className = 'sk-event-list';
+
+        // Get events list
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                var listHtml = '';
+                var response = JSON.parse(xhttp.responseText);
+
+                response.data.forEach(function(event) {
+                    var eventDate = moment(event.beginAt).format('dddd D MMMM');
+
+                    listHtml += '<li>' +
+                        '<a href="' + event.url + '" target="_blank">' + event.name + '</a><br />' +
+                        '<span class="sk-event-date">' + eventDate + '</span>' +
+                        '</li>';
+                });
+
+                eventList.innerHTML = listHtml;
+                widget.appendChild(eventList);
+                embedElement.appendChild(widget);
+            }
+        };
+        xhttp.open("GET", "http://dev.seekube.net:3030/events", true);
+        xhttp.send();
+    };
+
 })(this);
