@@ -26,8 +26,8 @@ The widget will be loaded in the div with ID "skEvent"
 
 ###Customize style
 
-Insert an internal stylesheet and override this CSS classes:
+Insert an internal stylesheet and override these CSS classes:
 
     .sk-event-widget {}
-	.sk-event-widget-header {}
-	.sk-event-list {}
+    .sk-event-widget-header {}
+    .sk-event-list {}
