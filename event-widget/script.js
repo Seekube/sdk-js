@@ -64,14 +64,14 @@ window.SK = {
                         var text = document.createElement('div');
                         text.className = 'sk-event-text';
 
-                        var title = document.createElement('div');
-                        title.className = 'sk-event-title';
-                        title.innerHTML = event.title;
+                        var name = document.createElement('div');
+                        name.className = 'sk-event-name';
+                        name.innerHTML = event.name;
 
                         var promoter = document.createElement('div');
+                        var organizer = event.promoter != '' ? '<span> - par ' + event.promoter + '</span>' : '';
                         promoter.className = 'sk-event-promoter';
-                        promoter.setAttribute('onclick', 'window.open("https://www.facebook.com");')
-                        promoter.innerHTML = event.city + ' par ' + '<span onclick="window.open(\"https://www.facebook.com\">' + event.promoter + '</span>';
+                        promoter.innerHTML = event.city + organizer;
 
                         var day = document.createElement('span');
                         day.className = 'sk-event-day';
@@ -85,38 +85,43 @@ window.SK = {
                         date.appendChild(day);
                         date.appendChild(newLine);
                         date.appendChild(month);
-                        text.appendChild(title);
+                        text.appendChild(name);
                         text.appendChild(promoter);
                         listHtml.appendChild(date);
                         listHtml.appendChild(text);
                         eventList.appendChild(listHtml);
                     });
 
+                    var footer = document.createElement('footer');
+                    footer.className = 'sk-event-footer';
+                    footer.innerHTML = '<a href="#" class="sk-event-footer-link">Ajoutez votre événement</a>';
+
                     eventBody.appendChild(eventList);
                     widget.appendChild(eventBody);
+                    widget.appendChild(footer);
                     embedElement.appendChild(widget);
 
-                    var eventsTitle = document.getElementsByClassName("sk-event-title");
+                    var eventsName = document.getElementsByClassName("sk-event-name");
 
-                    for (var i = 0; i < eventsTitle.length; i++) {
+                    for (var i = 0; i < eventsName.length; i++) {
 
-                        while (eventsTitle[i].offsetHeight > 40 || eventsTitle[i].innerHTML.length >= 55) {
+                        while (eventsName[i].offsetHeight > 40 || eventsName[i].innerHTML.length >= 55) {
                             var cut = true;
 
                             do {
-                                eventsTitle[i].innerHTML = eventsTitle[i].innerHTML.slice(0, -1);
-                            } while (eventsTitle[i].innerHTML.slice(-1) != ' ');
+                                eventsName[i].innerHTML = eventsName[i].innerHTML.slice(0, -1);
+                            } while (eventsName[i].innerHTML.slice(-1) != ' ');
                         }
 
                         if (cut) {
-                            eventsTitle[i].innerHTML += '...';
+                            eventsName[i].innerHTML += '...';
                             cut = false;
                         }
                     }
 
                 }
             };
-            xhttp.open("GET", "http://127.0.0.1:3030/api/v2/events", true);
+            xhttp.open("GET", "http://dev.seekube.net:3030/api/v2/events", true);
             xhttp.send();
         };
     }
