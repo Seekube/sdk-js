@@ -23,13 +23,6 @@ Copy paste this code in your HTML :
 
 The widget will be loaded in the div with ID "skEvent"
 
-### Attributes
-
-    height: change body size (not header and footer)
-    color-one: change the header background and the date color
-    color-two: change the background under the event list
-    color-three: change the events background and the footer background
-
 ### Customize style
 
 Insert an internal stylesheet and override these CSS classes:

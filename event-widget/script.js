@@ -54,6 +54,7 @@ window.SK = {
                     response.data.forEach(function (event) {
                         var eventDay = moment(event.beginAt).format('DD');
                         var eventMonth = moment(event.beginAt).format('MMMM');
+                        eventMonth = eventMonth.length > 5 ? eventMonth.slice(0, 4) + '.' : eventMonth;
 
                         var listHtml = document.createElement('li');
                         listHtml.setAttribute('onclick', 'window.open("' + event.eventUrl + '");');
@@ -118,39 +119,6 @@ window.SK = {
                         if (cut) {
                             eventsName[i].innerHTML += '...';
                             cut = false;
-                        }
-                    }
-
-                    var widgetHeight = embedElement.getAttribute('height');
-                    var widgetColorOne = embedElement.getAttribute('color-one');
-                    var widgetColorTwo = embedElement.getAttribute('color-two');
-                    var widgetColorThree = embedElement.getAttribute('color-three');
-
-                    if (widgetHeight) {
-                        eventBody.style.height = widgetHeight;
-                    }
-
-                    if (widgetColorOne) {
-                        document.getElementsByClassName('sk-event-widget-header')[0].style.background = widgetColorOne;
-                        var dateObjects = document.getElementsByClassName('sk-event-date');
-
-                        for (var i = 0; i < dateObjects.length; i++) {
-                            dateObjects[i].style.color = widgetColorOne;
-                        }
-                    }
-
-                    if (widgetColorTwo) {
-                        eventBody.style.background = widgetColorTwo;
-                        eventBody.style.borderColor = widgetColorTwo;
-                    }
-
-                    if (widgetColorThree) {
-                        var listObjects = document.getElementsByTagName('li');
-                        footer.style.background = widgetColorThree;
-                        footer.style.borderColor = widgetColorThree;
-
-                        for (var i = 0; i < listObjects.length; i++) {
-                            listObjects[i].style.backgroundColor = widgetColorThree;
                         }
                     }
                 }
