@@ -31,10 +31,6 @@ Insert an internal stylesheet and override these CSS classes:
     .sk-event-widget-header {}
     .sk-event-body {}
     .sk-event-list {}
-    .sk-event-list li{}
-    .sk-event-list li:hover {}
-    .sk-event-list li a{}
-    .sk-event-list li a:hover{}
     .sk-event-date {}
     .sk-event-day {}
     .sk-event-month {}
@@ -43,6 +39,6 @@ Insert an internal stylesheet and override these CSS classes:
     .sk-event-promoter {}
     .sk-event-footer {}
     .sk-event-footer-link {}
-    ::-webkit-scrollbar-thumb {
+    .sk-event-widget ::-webkit-scrollbar-thumb {
         background-color: color;
     }

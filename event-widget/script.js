@@ -57,7 +57,7 @@ window.SK = {
                         eventMonth = eventMonth.length > 5 ? eventMonth.slice(0, 4) + '.' : eventMonth;
 
                         var listHtml = document.createElement('li');
-                        listHtml.setAttribute('onclick', 'window.open("' + event.eventUrl + '");');
+                        listHtml.setAttribute('onclick', 'window.open("' + event.url + '");');
                         var newLine = document.createElement('br');
 
                         var date = document.createElement('div');

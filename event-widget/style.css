@@ -1,6 +1,5 @@
 .sk-event-widget {
     max-width: 380px;
-    max-height: 500px;
     font-family: "Open Sans";
     font-size: 17.2px;
     line-height: 0.9;
@@ -17,15 +16,11 @@
 .sk-event-body {
     cursor: pointer;
     height: 424px;
-    margin: 0;
-    padding: 0;
     background-color: #ffffff;
     border: solid 1px #dddddd;
     overflow: auto;
 }
 .sk-event-list {
-    max-width: 360px;
-    max-height: 414px;
     padding: 0;
     margin: 20px 20px;
     list-style: none;
@@ -115,12 +110,11 @@
     color: #000000;
 }
 
-::-webkit-scrollbar {
+.sk-event-widget ::-webkit-scrollbar {
     width: 10px;
 }
 
-::-webkit-scrollbar-thumb {
-
+.sk-event-widget ::-webkit-scrollbar-thumb {
     background-color: #ebebeb;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0);
 }
