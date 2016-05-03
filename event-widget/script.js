@@ -1,5 +1,6 @@
 'use strict';
 
+
 window.SK = {
     initEventWidget: function () {
         var head = document.getElementsByTagName('head')[0];
@@ -59,6 +60,7 @@ window.SK = {
                         var newLine = document.createElement('br');
 
                         var date = document.createElement('div');
+                        widget.id = 'skEventDate';
                         date.className = 'sk-event-date';
 
                         var text = document.createElement('div');
@@ -94,7 +96,7 @@ window.SK = {
 
                     var footer = document.createElement('footer');
                     footer.className = 'sk-event-footer';
-                    footer.innerHTML = '<a href="#" class="sk-event-footer-link">Ajoutez votre événement</a>';
+                    footer.innerHTML = '<a href="http://goo.gl/forms/wAlvsAbfzP" target="_blank" class="sk-event-footer-link">Ajoutez votre événement</a>';
 
                     eventBody.appendChild(eventList);
                     widget.appendChild(eventBody);
@@ -119,6 +121,38 @@ window.SK = {
                         }
                     }
 
+                    var widgetHeight = embedElement.getAttribute('height');
+                    var widgetColorOne = embedElement.getAttribute('color-one');
+                    var widgetColorTwo = embedElement.getAttribute('color-two');
+                    var widgetColorThree = embedElement.getAttribute('color-three');
+
+                    if (widgetHeight) {
+                        eventBody.style.height = widgetHeight;
+                    }
+
+                    if (widgetColorOne) {
+                        document.getElementsByClassName('sk-event-widget-header')[0].style.background = widgetColorOne;
+                        var dateObjects = document.getElementsByClassName('sk-event-date');
+
+                        for (var i = 0; i < dateObjects.length; i++) {
+                            dateObjects[i].style.color = widgetColorOne;
+                        }
+                    }
+
+                    if (widgetColorTwo) {
+                        eventBody.style.background = widgetColorTwo;
+                        eventBody.style.borderColor = widgetColorTwo;
+                    }
+
+                    if (widgetColorThree) {
+                        var listObjects = document.getElementsByTagName('li');
+                        footer.style.background = widgetColorThree;
+                        footer.style.borderColor = widgetColorThree;
+
+                        for (var i = 0; i < listObjects.length; i++) {
+                            listObjects[i].style.backgroundColor = widgetColorThree;
+                        }
+                    }
                 }
             };
             xhttp.open("GET", "http://dev.seekube.net:3030/api/v2/events", true);

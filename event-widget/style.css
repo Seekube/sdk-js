@@ -27,16 +27,17 @@
     max-width: 360px;
     max-height: 414px;
     padding: 0;
-    margin: 10px 20px;
+    margin: 20px 20px;
     list-style: none;
 }
 
 .sk-event-list li{
     width: 330px;
     height: 100px;
+    line-height: 94px;
     margin-bottom: 10px;
     background-color: #f4f4f4;
-    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.5);
 }
 
 .sk-event-list li:hover {
@@ -60,7 +61,9 @@
     color: #2980b9;
     text-align: center;
     text-transform: capitalize;
-    padding: 20px 15px;
+    vertical-align: text-bottom;
+    line-height: 0.9;
+    margin: 0 15px;
     display: inline-block;
 }
 
@@ -70,14 +73,15 @@
 
 .sk-event-month {
     font-size: 20px;
-    padding-left: 5px;
 }
 
 .sk-event-text {
     width: 232px;
-    margin-top: 16px;
+    margin-top: 10px;
     color: #000000;
-    float: right;
+    vertical-align: middle;
+    line-height: 0.9;
+    display: inline-block;
 }
 
 .sk-event-name {
@@ -85,6 +89,7 @@
     word-wrap: break-word;
     font-weight: 600;
     font-size: 16px;
+    margin-right: 6px;
 }
 
 .sk-event-promoter {
@@ -111,11 +116,11 @@
 }
 
 ::-webkit-scrollbar {
-    width: 9px;
+    width: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    border-radius: 4.5px;
+
     background-color: #ebebeb;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0);
 }
