@@ -13,7 +13,7 @@ Copy paste this code in your HTML :
     (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id; js.src = "script.js";
+            js = d.createElement(s); js.id = id; js.src = "https://www.seekube.com/sdk-js/event-widget/script.js";
             fjs.parentNode.insertBefore(js, fjs);
             js.onload = function(){
                 SK.initEventWidget();

@@ -123,7 +123,7 @@ window.SK = {
                     }
                 }
             };
-            xhttp.open("GET", "http://dev.seekube.net:3030/api/v2/events", true);
+            xhttp.open("GET", "http://api.seekube.com/v2/events", true);
             xhttp.send();
         };
     }
