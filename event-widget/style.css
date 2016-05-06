@@ -1,7 +1,6 @@
 .sk-event-widget {
-    max-width: 380px;
-    font-family: "Open Sans";
-    font-size: 17.2px;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 17px;
     line-height: 0.9;
 }
 
@@ -14,10 +13,10 @@
 }
 
 .sk-event-body {
-    cursor: pointer;
     height: 424px;
     background-color: #ffffff;
     border: solid 1px #dddddd;
+    border-bottom: none;
     overflow: auto;
 }
 .sk-event-list {
@@ -27,12 +26,15 @@
 }
 
 .sk-event-list li{
-    width: 330px;
-    height: 100px;
+    min-height: 100px;
+    width: 100%;
     line-height: 94px;
     margin-bottom: 10px;
     background-color: #f4f4f4;
     box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
 }
 
 .sk-event-list li:hover {
@@ -50,14 +52,13 @@
 }
 
 .sk-event-date {
-    width: 59.2px;
-    height: 31px;
+    width: 59px;
     font-weight: bold;
     color: #2980b9;
     text-align: center;
     text-transform: capitalize;
     vertical-align: text-bottom;
-    line-height: 0.9;
+    line-height: 1;
     margin: 0 15px;
     display: inline-block;
 }
@@ -71,8 +72,6 @@
 }
 
 .sk-event-text {
-    width: 232px;
-    margin-top: 10px;
     color: #000000;
     vertical-align: middle;
     line-height: 0.9;
@@ -85,6 +84,7 @@
     font-weight: 600;
     font-size: 16px;
     margin-right: 6px;
+    cursor: pointer;
 }
 
 .sk-event-promoter {
