@@ -7,7 +7,7 @@ window.SK = {
         var styleTag = document.createElement("link");
         styleTag.rel = "stylesheet";
         styleTag.type = "text/css";
-        styleTag.href = "style.css";
+        styleTag.href = "https://www.seekube.com/sdk-js/event-widget/style.css";
         styleTag.media = "all";
 
         var fontOpenSans = document.createElement("link");
