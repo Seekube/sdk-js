@@ -123,7 +123,7 @@ window.SK = {
                     }
                 }
             };
-            xhttp.open("GET", "http://api.seekube.com/v2/events?dateFilter=future&$limit=20", true);
+            xhttp.open("GET", "https://api.seekube.com/v2/events?dateFilter=future&$limit=20", true);
             xhttp.send();
         };
     }
