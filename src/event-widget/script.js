@@ -1,13 +1,12 @@
 'use strict';
 
-
 window.SK = {
     initEventWidget: function () {
         var head = document.getElementsByTagName('head')[0];
         var styleTag = document.createElement("link");
         styleTag.rel = "stylesheet";
         styleTag.type = "text/css";
-        styleTag.href = "https://www.seekube.com/sdk-js/event-widget/style.css";
+        styleTag.href = "https://cdn.seekube.com/sdk-js/event-widget/style.min.css";
         styleTag.media = "all";
 
         var fontOpenSans = document.createElement("link");
