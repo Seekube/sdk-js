@@ -1,120 +1,151 @@
 'use strict';
 
 window.SK = {
-    initEventWidget: function () {
-        var head = document.getElementsByTagName('head')[0];
-        var styleTag = document.createElement("link");
+    EventWidget: {
+        init: function() {
+            this.initStyle();
+            this.initStructure();
 
-        styleTag.rel = "stylesheet";
-        styleTag.type = "text/css";
-        styleTag.href = "https://cdn.seekube.com/sdk-js/event-widget/style.min.css";
-        styleTag.media = "all";
+            // Set language for moment
+            moment.locale('fr');
+        },
 
-        var fontOpenSans = document.createElement("link");
-        fontOpenSans.rel = "stylesheet";
-        fontOpenSans.type = "text/css";
-        fontOpenSans.href = "//fonts.googleapis.com/css?family=Open+Sans";
-        fontOpenSans.media = "all";
+        loadEvents: function() {
+            var xhttp = new XMLHttpRequest();
 
-        head.appendChild(fontOpenSans);
-        head.appendChild(styleTag);
+            // Function Bind to use this of EventWidget
+            xhttp.onreadystatechange = function() {
+                // readyState == DONE
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    var eventList = document.createElement('ul');
+                    eventList.className = 'sk-event-list';
 
-        moment.locale('fr');
+                    var response = JSON.parse(xhttp.responseText);
 
-        var embedElement = document.getElementById('skEvent');
+                    // Function Bind to use this of EventWidget
+                    response.data.forEach(function(event) {
+                        this.addEvent(event, eventList);
+                    }.bind(this));
 
-        var widget = document.createElement('div');
-        widget.id = 'skEventWidget';
-        widget.className = 'sk-event-widget';
-        widget.innerHTML = '<header class="sk-event-widget-header">Découvrez les événements carrières</header>';
+                    this.eventBody.appendChild(eventList);
+                    this.trimEvents();
+                }
+            }.bind(this);
 
-        var eventBody = document.createElement('section');
-        eventBody.className = 'sk-event-body';
+            // Get events list
+            xhttp.open("GET", "https://api.seekube.com/v2/events?dateFilter=future&$limit=20", true);
+            xhttp.send();
+        },
 
-        // Get events list
-        var xhttp = new XMLHttpRequest();
+        initStyle: function() {
+            var head = document.getElementsByTagName('head')[0];
+            var styleTag = document.createElement("link");
 
-        xhttp.onreadystatechange = function () {
-            var eventList = document.createElement('ul');
-            eventList.className = 'sk-event-list';
+            // Init CSS
+            styleTag.rel = "stylesheet";
+            styleTag.type = "text/css";
+            styleTag.href = "https://cdn.seekube.com/sdk-js/event-widget/style.min.css";
+            styleTag.media = "all";
 
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-                var response = JSON.parse(xhttp.responseText);
+            // Init Font
+            var fontOpenSans = document.createElement("link");
+            fontOpenSans.rel = "stylesheet";
+            fontOpenSans.type = "text/css";
+            fontOpenSans.href = "//fonts.googleapis.com/css?family=Open+Sans";
+            fontOpenSans.media = "all";
 
-                response.data.forEach(function (event) {
-                    var eventDay = moment(event.beginAt).format('DD');
-                    var eventMonth = moment(event.beginAt).format('MMMM');
-                    eventMonth = eventMonth.length > 5 ? eventMonth.slice(0, 4) + '.' : eventMonth;
+            // Add CSS and Font to <head>
+            head.appendChild(fontOpenSans);
+            head.appendChild(styleTag);
+        },
 
-                    var listHtml = document.createElement('li');
-                    listHtml.setAttribute('onclick', 'window.open("' + event.url + '");');
-                    listHtml.setAttribute('data-url', event.url);
-                    var newLine = document.createElement('br');
+        initStructure: function() {
+            var embedElement = document.getElementById('skEvent');
 
-                    var date = document.createElement('div');
-                    widget.id = 'skEventDate';
-                    date.className = 'sk-event-date';
+            // Main Frame
+            var widget = document.createElement('div');
+            widget.id = 'skEventWidget';
+            widget.className = 'sk-event-widget';
+            widget.innerHTML = '<header class="sk-event-widget-header">Découvrez les événements carrières</header>';
 
-                    var text = document.createElement('div');
-                    text.className = 'sk-event-text';
+            // Section with events
+            this.eventBody = document.createElement('section');
+            this.eventBody.className = 'sk-event-body';
 
-                    var name = document.createElement('div');
-                    name.className = 'sk-event-name';
-                    name.innerHTML = event.name;
+            var footer = document.createElement('footer');
+            footer.className = 'sk-event-footer';
+            footer.innerHTML = '<a href="http://goo.gl/forms/wAlvsAbfzP" target="_blank" class="sk-event-footer-link">Ajoutez votre événement</a>';
 
-                    var promoter = document.createElement('div');
-                    var organizer = event.promoter != '' ? '<span> - par ' + event.promoter + '</span>' : '';
-                    promoter.className = 'sk-event-promoter';
-                    promoter.innerHTML = event.city + organizer;
+            widget.appendChild(this.eventBody);
+            widget.appendChild(footer);
+            embedElement.appendChild(widget);
+        },
 
-                    var day = document.createElement('span');
-                    day.className = 'sk-event-day';
-                    day.innerHTML = eventDay;
+        addEvent: function(event, eventList) {
+            var eventDay = moment(event.beginAt).format('DD');
+            var eventMonth = moment(event.beginAt).format('MMMM');
+            eventMonth = eventMonth.length > 5 ? eventMonth.slice(0, 4) + '.' : eventMonth;
 
-                    var month= document.createElement('span');
-                    month.className = 'sk-event-month';
-                    month.innerHTML = eventMonth;
+            var listHtml = document.createElement('li');
+            listHtml.addEventListener('click', function() {
+                window.open(event.url)
+            });
+            listHtml.setAttribute('data-url', event.url);
+            var newLine = document.createElement('br');
 
-                    date.appendChild(day);
-                    date.appendChild(newLine);
-                    date.appendChild(month);
-                    text.appendChild(name);
-                    text.appendChild(promoter);
-                    listHtml.appendChild(date);
-                    listHtml.appendChild(text);
-                    eventList.appendChild(listHtml);
-                });
+            var date = document.createElement('div');
+            date.id = 'skEventDate';
+            date.className = 'sk-event-date';
 
-                var footer = document.createElement('footer');
-                footer.className = 'sk-event-footer';
-                footer.innerHTML = '<a href="http://goo.gl/forms/wAlvsAbfzP" target="_blank" class="sk-event-footer-link">Ajoutez votre événement</a>';
+            var text = document.createElement('div');
+            text.className = 'sk-event-text';
 
-                eventBody.appendChild(eventList);
-                widget.appendChild(eventBody);
-                widget.appendChild(footer);
-                embedElement.appendChild(widget);
+            var name = document.createElement('div');
+            name.className = 'sk-event-name';
+            name.innerHTML = event.name;
 
-                var eventsName = document.getElementsByClassName("sk-event-name");
+            var promoter = document.createElement('div');
+            var organizer = event.promoter != '' ? '<span> - par ' + event.promoter + '</span>' : '';
+            promoter.className = 'sk-event-promoter';
+            promoter.innerHTML = event.city + organizer;
 
-                for (var i = 0; i < eventsName.length; i++) {
+            var day = document.createElement('span');
+            day.className = 'sk-event-day';
+            day.innerHTML = eventDay;
 
-                    while (eventsName[i].offsetHeight > 40 || eventsName[i].innerHTML.length >= 55) {
-                        var cut = true;
+            var month= document.createElement('span');
+            month.className = 'sk-event-month';
+            month.innerHTML = eventMonth;
 
-                        do {
-                            eventsName[i].innerHTML = eventsName[i].innerHTML.slice(0, -1);
-                        } while (eventsName[i].innerHTML.slice(-1) != ' ');
-                    }
+            date.appendChild(day);
+            date.appendChild(newLine);
+            date.appendChild(month);
+            text.appendChild(name);
+            text.appendChild(promoter);
+            listHtml.appendChild(date);
+            listHtml.appendChild(text);
+            eventList.appendChild(listHtml);
+        },
 
-                    if (cut) {
-                        eventsName[i].innerHTML += '...';
-                        cut = false;
-                    }
+        trimEvents: function() {
+
+            var eventsName = document.getElementsByClassName("sk-event-name");
+
+            for (var i = 0; i < eventsName.length; i++) {
+
+                while (eventsName[i].offsetHeight > 40 || eventsName[i].innerHTML.length >= 55) {
+                    var cut = true;
+
+                    do {
+                        eventsName[i].innerHTML = eventsName[i].innerHTML.slice(0, -1);
+                    } while (eventsName[i].innerHTML.slice(-1) != ' ');
+                }
+
+                if (cut) {
+                    eventsName[i].innerHTML += '...';
+                    cut = false;
                 }
             }
-        };
-
-        xhttp.open("GET", "https://api.seekube.com/v2/events?dateFilter=future&$limit=20", true);
-        xhttp.send();
+        }
     }
 };
