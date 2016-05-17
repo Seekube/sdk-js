@@ -14,9 +14,8 @@ window.SK = {
             var xhttp = new XMLHttpRequest();
 
             // Function Bind to use this of EventWidget
-            xhttp.onreadystatechange = function() {
-                // readyState == DONE
-                if (xhttp.readyState == 4 && xhttp.status == 200) {
+            xhttp.onload = function() {
+                if (xhttp.status == 200) {
                     var eventList = document.createElement('ul');
                     eventList.className = 'sk-event-list';
 
