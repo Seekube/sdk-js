@@ -1,5 +1,10 @@
 'use strict';
 
+const DEFAULT_SETTINGS = {
+        url: "https://api.seekube.com/v2/",
+        request: "events?dateFilter=future&$limit=20"
+};
+
 window.SK = {
     EventWidget: {
         init: function() {
@@ -10,7 +15,10 @@ window.SK = {
             moment.locale('fr');
         },
 
-        loadEvents: function() {
+        loadEvents: function(settings) {
+            settings = settings ? this.overloadSettings(settings) : DEFAULT_SETTINGS;
+            settings = this.correctUrl(settings);
+
             var xhttp = new XMLHttpRequest();
 
             // Function Bind to use this of EventWidget
@@ -32,8 +40,28 @@ window.SK = {
             }.bind(this);
 
             // Get events list
-            xhttp.open("GET", "https://api.seekube.com/v2/events?dateFilter=future&$limit=20", true);
+            xhttp.open("GET", settings.url + settings.request, true);
             xhttp.send();
+        },
+
+        correctUrl: function(settings) {
+            // If there is no "/" at the end we add it
+            if (settings.url.charAt(settings.url.length - 1) !== '/') {
+                settings.url += "/";
+            }
+            // If there is a "/" at the end we remove it
+            if (settings.request.charAt(0) === '/') {
+                settings.request = settings.request.slice(1);
+            }
+
+            return settings;
+        },
+
+        overloadSettings: function(settings) {
+            settings.url = settings.url || DEFAULT_SETTINGS.url;
+            settings.request = settings.request || DEFAULT_SETTINGS.url;
+
+            return settings;
         },
 
         initStyle: function() {
