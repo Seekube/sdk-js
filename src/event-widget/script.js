@@ -13,12 +13,12 @@ const GA = {
 window.SK = {
     EventWidget: {
         init: function(settings) {
-            this.settings = settings ? this.overloadSettings(settings) : DEFAULT_SETTINGS;
-            this.settings = this.correctUrl(this.settings);
+            this._settings = settings ? this._overloadSettings(settings) : DEFAULT_SETTINGS;
+            this._settings = this._correctUrl(this._settings);
 
-            this.initStyle();
-            this.initStructure();
-            this.guid = SeekubeUtils.getOrCreateGUID();
+            this._initStyle();
+            this._initStructure();
+            this._guid = SeekubeUtils.getOrCreateGUID();
 
             // Set language for moment
             moment.locale('fr');
@@ -37,20 +37,20 @@ window.SK = {
 
                     // Function Bind to use this of EventWidget
                     response.data.forEach(function(event) {
-                        this.addEvent(event, eventList);
+                        this._addEvent(event, eventList);
                     }.bind(this));
 
-                    this.eventBody.appendChild(eventList);
-                    this.trimEvents();
+                    this._eventBody.appendChild(eventList);
+                    this._trimEvents();
                 }
             }.bind(this);
 
             // Get events list
-            xhttp.open("GET", this.settings.url + this.settings.request, true);
+            xhttp.open("GET", this._settings.url + this._settings.request, true);
             xhttp.send();
         },
 
-        correctUrl: function(settings) {
+        _correctUrl: function(settings) {
             // If there is no "/" at the end we add it
             if (settings.url.charAt(settings.url.length - 1) !== '/') {
                 settings.url += "/";
@@ -63,25 +63,25 @@ window.SK = {
             return settings;
         },
 
-        overloadSettings: function(settings) {
+        _overloadSettings: function(settings) {
             settings.url = settings.url || DEFAULT_SETTINGS.url;
             settings.request = settings.request || DEFAULT_SETTINGS.url;
 
             return settings;
         },
 
-        sendAnalyticsRequest: function(payload) {
-            this.xhttpAnalytics = new XMLHttpRequest();
+        _sendAnalyticsRequest: function(payload) {
+            this._xhttpAnalytics = new XMLHttpRequest();
 
-            this.xhttpAnalytics.open("POST", GA.MEASUREMENT_URL, true)
-            this.xhttpAnalytics.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            this._xhttpAnalytics.open("POST", GA.MEASUREMENT_URL, true)
+            this._xhttpAnalytics.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
             var urlEncodedData = SeekubeUtils.payloadToUrlEncoded(payload);
 
-            this.xhttpAnalytics.send(urlEncodedData);
+            this._xhttpAnalytics.send(urlEncodedData);
         },
 
-        initStyle: function() {
+        _initStyle: function() {
             var head = document.getElementsByTagName('head')[0];
             var styleTag = document.createElement("link");
 
@@ -103,7 +103,7 @@ window.SK = {
             head.appendChild(styleTag);
         },
 
-        initStructure: function() {
+        _initStructure: function() {
             var embedElement = document.getElementById('skEvent');
 
             // Main Frame
@@ -113,19 +113,19 @@ window.SK = {
             widget.innerHTML = '<header class="sk-event-widget-header">Découvrez les événements carrières</header>';
 
             // Section with events
-            this.eventBody = document.createElement('section');
-            this.eventBody.className = 'sk-event-body';
+            this._eventBody = document.createElement('section');
+            this._eventBody.className = 'sk-event-body';
 
             var footer = document.createElement('footer');
             footer.className = 'sk-event-footer';
             footer.innerHTML = '<a href="http://goo.gl/forms/wAlvsAbfzP" target="_blank" class="sk-event-footer-link">Ajoutez votre événement</a>';
 
-            widget.appendChild(this.eventBody);
+            widget.appendChild(this._eventBody);
             widget.appendChild(footer);
             embedElement.appendChild(widget);
         },
 
-        addEvent: function(event, eventList) {
+        _addEvent: function(event, eventList) {
             var eventDay = moment(event.beginAt).format('DD');
             var eventMonth = moment(event.beginAt).format('MMMM');
             eventMonth = eventMonth.length > 5 ? eventMonth.slice(0, 4) + '.' : eventMonth;
@@ -140,7 +140,7 @@ window.SK = {
                 var payload = {
                     v: 1,                                           // Protocol version
                     tid: GA.ID,                                     // GA ID
-                    cid: this.guid,                                 // Client ID
+                    cid: this._guid,                                 // Client ID
                     t: "event",                                     // Event Hit type
                     ec: "Event Widget",                             // Category
                     ea: "click",                                    // Event Action
@@ -150,7 +150,7 @@ window.SK = {
                     dt: document.title                              // Page title
                 };
 
-                this.sendAnalyticsRequest(payload);
+                this._sendAnalyticsRequest(payload);
             }.bind(this));
 
             listHtml.setAttribute('data-url', event.url);
@@ -190,7 +190,7 @@ window.SK = {
             eventList.appendChild(listHtml);
         },
 
-        trimEvents: function() {
+        _trimEvents: function() {
 
             var eventsName = document.getElementsByClassName("sk-event-name");
 
