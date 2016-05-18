@@ -16,7 +16,7 @@
     "node": ">= 0.12.0"
   },
   "scripts": {
-    "test": "./node_modules/uglify-js/bin/uglifyjs ./node_modules/moment/min/moment.min.js ./node_modules/moment/locale/fr.js ./src/event-widget/script.js -o ./dist/event-widget/script.min.js && ./node_modules/clean-css/bin/cleancss -o dist/event-widget/style.min.css src/event-widget/style.css"
+    "test": "./node_modules/uglify-js/bin/uglifyjs ./node_modules/moment/min/moment.min.js ./node_modules/moment/locale/fr.js ./src/utils/SeekubeUtils.js ./src/event-widget/script.js -o ./dist/event-widget/script.min.js && ./node_modules/clean-css/bin/cleancss -o dist/event-widget/style.min.css src/event-widget/style.css"
   },
   "dependencies": {
     "clean-css": "*",

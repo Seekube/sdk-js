@@ -5,11 +5,17 @@ const DEFAULT_SETTINGS = {
         request: "events?dateFilter=future&$limit=20"
 };
 
+const GA = {
+    ID: "UA-27503660-5",
+    MEASUREMENT_URL: "https://www.google-analytics.com/collect"
+};
+
 window.SK = {
     EventWidget: {
         init: function() {
             this.initStyle();
             this.initStructure();
+            this.guid = SeekubeUtils.getOrCreateGUID();
 
             // Set language for moment
             moment.locale('fr');
@@ -64,6 +70,17 @@ window.SK = {
             return settings;
         },
 
+        sendAnalyticsRequest: function(payload) {
+            this.xhttpAnalytics = new XMLHttpRequest();
+
+            this.xhttpAnalytics.open("POST", GA.MEASUREMENT_URL, true)
+            this.xhttpAnalytics.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            var urlEncodedData = SeekubeUtils.payloadToUrlEncoded(payload);
+
+            this.xhttpAnalytics.send(urlEncodedData);
+        },
+
         initStyle: function() {
             var head = document.getElementsByTagName('head')[0];
             var styleTag = document.createElement("link");
@@ -114,9 +131,28 @@ window.SK = {
             eventMonth = eventMonth.length > 5 ? eventMonth.slice(0, 4) + '.' : eventMonth;
 
             var listHtml = document.createElement('li');
+
             listHtml.addEventListener('click', function() {
                 window.open(event.url)
             });
+            listHtml.addEventListener('click', function() {
+
+                var payload = {
+                    v: 1,                                           // Protocol version
+                    tid: GA.ID,                                     // GA ID
+                    cid: this.guid,                                 // Client ID
+                    t: "event",                                     // Event Hit type
+                    ec: "Event Widget",                             // Category
+                    ea: "click",                                    // Event Action
+                    el: event.url,                                  // Label
+                    dl: location.href,                              // Document location url
+                    dr: location.href,                              // Document Referrer
+                    dt: document.title                              // Page title
+                };
+
+                this.sendAnalyticsRequest(payload);
+            }.bind(this));
+
             listHtml.setAttribute('data-url', event.url);
             var newLine = document.createElement('br');
 
