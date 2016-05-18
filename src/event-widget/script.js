@@ -12,7 +12,10 @@ const GA = {
 
 window.SK = {
     EventWidget: {
-        init: function() {
+        init: function(settings) {
+            this.settings = settings ? this.overloadSettings(settings) : DEFAULT_SETTINGS;
+            this.settings = this.correctUrl(this.settings);
+
             this.initStyle();
             this.initStructure();
             this.guid = SeekubeUtils.getOrCreateGUID();
@@ -21,10 +24,7 @@ window.SK = {
             moment.locale('fr');
         },
 
-        loadEvents: function(settings) {
-            settings = settings ? this.overloadSettings(settings) : DEFAULT_SETTINGS;
-            settings = this.correctUrl(settings);
-
+        loadEvents: function() {
             var xhttp = new XMLHttpRequest();
 
             // Function Bind to use this of EventWidget
@@ -46,7 +46,7 @@ window.SK = {
             }.bind(this);
 
             // Get events list
-            xhttp.open("GET", settings.url + settings.request, true);
+            xhttp.open("GET", this.settings.url + this.settings.request, true);
             xhttp.send();
         },
 
