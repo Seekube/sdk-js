@@ -24,6 +24,19 @@ Copy paste this code in your HTML :
 
 The widget will be loaded in the div with ID "skEvent"
 
+### Option
+
+You can change some settings at the initialization of the widget:
+
+    var settings = {
+        url: "https://api.seekube.com/v2/",
+        request: "events?dateFilter=future&$limit=20"
+    }
+
+And then call:
+
+    SK.EventWidget.init(settings);
+
 ### Customize style
 
 Insert an internal stylesheet and override these CSS classes:

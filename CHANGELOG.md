@@ -6,6 +6,11 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 ## [Unreleased]
 ### Changed
 
+## [0.0.4] - 2016-05-20
+### Changed
+- Correction error in getOrCreateGUID in SeekubeUtils
+- Update README
+
 ## [0.0.3] - 2016-05-20
 ### Changed
 - Add Changelog to the project
