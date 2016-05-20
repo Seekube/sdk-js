@@ -5,6 +5,9 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 
 ## [Unreleased]
 ### Changed
+
+## [0.0.5] - 2016-05-20
+### Changed
 - Add pageview analytics at the initialization.
 - Add Hostname and Pathname to the analytics request when a user click on a link
 
