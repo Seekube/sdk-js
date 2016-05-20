@@ -19,8 +19,8 @@ var SeekubeUtils = {
             guid = localStorage.getItem(SEEKUBE_LOCAL_STORAGE_KEY);
         }
         if (!guid) {
-            guid = this.generateGuid();
-            localStorage.setItem(SEEKUBE_LOCAL_STORAGE_KEY, this.guid);
+            guid = this._generateGUID();
+            localStorage.setItem(SEEKUBE_LOCAL_STORAGE_KEY, guid);
         }
         return guid;
     },
