@@ -20,6 +20,20 @@ window.SK = {
             this._initStructure();
             this._guid = SeekubeUtils.getOrCreateGUID();
 
+            // Send a page view
+            var payload = {
+                v: 1,                                           // Protocol version
+                tid: GA.ID,                                     // GA ID
+                cid: this._guid,                                // Client ID
+                t: "pageview",                                  // Event Hit type
+                dl: location.href,                              // Document location url
+                dh: location.hostname,                          // Document hostname.
+                dp: location.href,                              // Page.
+                dt: document.title                              // Page title
+            };
+
+            this._sendAnalyticsRequest(payload);
+
             // Set language for moment
             moment.locale('fr');
         },
@@ -146,7 +160,9 @@ window.SK = {
                     ea: "click",                                    // Event Action
                     el: event.url,                                  // Label
                     dl: location.href,                              // Document location url
-                    dr: location.href,                              // Document Referrer
+                    dr: location.href,                              // Document location url
+                    dh: location.hostname,                          // Document hostname.
+                    dp: location.pathname,                          // Page.
                     dt: document.title                              // Page title
                 };
 
