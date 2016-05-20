@@ -16,7 +16,8 @@ Copy paste this code in your HTML :
             js = d.createElement(s); js.id = id; js.src = "https://cdn.seekube.com/sdk-js/event-widget/script.min.js";
             fjs.parentNode.insertBefore(js, fjs);
             js.onload = function(){
-                SK.initEventWidget();
+                SK.EventWidget.init();
+                SK.EventWidget.loadEvents();
             };
         }(document, 'script', 'seekube-jssdk'));
     </script>
