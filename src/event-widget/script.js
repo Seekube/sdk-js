@@ -160,7 +160,9 @@ window.SK = {
                     ea: "click",                                    // Event Action
                     el: event.url,                                  // Label
                     dl: location.href,                              // Document location url
-                    dr: location.href,                              // Document Referrer
+                    dr: location.href,                              // Document location url
+                    dh: location.hostname,                          // Document hostname.
+                    dp: location.pathname,                          // Page.
                     dt: document.title                              // Page title
                 };
 
