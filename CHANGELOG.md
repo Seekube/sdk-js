@@ -5,6 +5,9 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 
 ## [Unreleased]
 ### Changed
+
+## [0.0.3] - 2016-05-20
+### Changed
 - Add Changelog to the project
 - Refactoring event-widget
 - Add settings to be able to configure the widget

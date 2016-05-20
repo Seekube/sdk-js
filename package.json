@@ -1,7 +1,7 @@
 {
   "name": "seekube-sdk-js",
   "description": "Seekube SDK JS",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "",
   "main": "src/",
   "keywords": [
