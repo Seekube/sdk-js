@@ -5,6 +5,7 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 
 ## [Unreleased]
 ### Changed
+- Add pageview analytics at the initialization.
 
 ## [0.0.4] - 2016-05-20
 ### Changed
