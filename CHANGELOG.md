@@ -4,7 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This changelog's template come from [keepachangelog.com](http://keepachangelog.com/). When editing this document, please follow the convention specified there.
 
 ## [Unreleased]
-### Changed
+### Added
+- Add utm infos for Google analytics if the link belong to seekube.com
 
 ## [0.0.5] - 2016-05-20
 ### Changed
