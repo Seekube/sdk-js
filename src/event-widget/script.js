@@ -149,7 +149,15 @@ window.SK = {
                     utm_medium: "Event Widget",
                     utm_source: location.hostname
                 };
-                event.url += '?' + SeekubeUtils.payloadToUrlEncoded(payload);
+
+                var utmParameters = SeekubeUtils.payloadToUrlEncoded(payload);
+
+                // Check if the URL already have parameters
+                if (event.url.match(/\?.*/)) {
+                    event.url += '&' + utmParameters;
+                } else {
+                    event.url += '?' + utmParameters;
+                }
             }
 
             var eventDay = moment(event.beginAt).format('DD');

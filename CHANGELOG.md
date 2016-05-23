@@ -4,7 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This changelog's template come from [keepachangelog.com](http://keepachangelog.com/). When editing this document, please follow the convention specified there.
 
 ## [Unreleased]
+
+## [0.0.7] - 2016-05-20
 ### Changed
+- Check if other parameters exist before adding utm infos to create a valid url.
 
 ## [0.0.6] - 2016-05-20
 ### Added
