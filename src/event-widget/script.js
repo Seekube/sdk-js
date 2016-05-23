@@ -10,6 +10,8 @@ const GA = {
     MEASUREMENT_URL: "https://www.google-analytics.com/collect"
 };
 
+const REGEX_SEEKUBE_DOMAIN = "seekube.com"
+
 window.SK = {
     EventWidget: {
         init: function(settings) {
@@ -140,6 +142,16 @@ window.SK = {
         },
 
         _addEvent: function(event, eventList) {
+            // if the url belong to Seekube we add the utm infos to the url.
+            if (event.url.match(REGEX_SEEKUBE_DOMAIN)) {
+                var payload = {
+                    utm_campaign: "Web",
+                    utm_medium: "Event Widget",
+                    utm_source: location.hostname
+                };
+                event.url += '?' + SeekubeUtils.payloadToUrlEncoded(payload);
+            }
+
             var eventDay = moment(event.beginAt).format('DD');
             var eventMonth = moment(event.beginAt).format('MMMM');
             eventMonth = eventMonth.length > 5 ? eventMonth.slice(0, 4) + '.' : eventMonth;

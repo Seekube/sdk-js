@@ -6,6 +6,10 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 ## [Unreleased]
 ### Changed
 
+## [0.0.6] - 2016-05-20
+### Added
+- Add utm infos for Google analytics if the link belong to seekube.com
+
 ## [0.0.5] - 2016-05-20
 ### Changed
 - Add pageview analytics at the initialization.
