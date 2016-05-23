@@ -5,6 +5,7 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 
 ## [Unreleased]
 ### Changed
+- Check if other parameters exist before adding utm infos to create a valid url.
 
 ## [0.0.6] - 2016-05-20
 ### Added
